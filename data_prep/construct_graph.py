@@ -1,60 +1,67 @@
-# pip install spacy-entity-linker
-# python -m spacy_entity_linker "download_knowledge_base"
-import spacy  # version 3.5
-
-# initialize language model
-nlp = spacy.load("en_core_web_md")
-
-# add pipeline (declared through entry_points in setup.py)
-nlp.add_pipe("entityLinker", last=True)
+import EntityExtractor 
+import WikiDataRetriever 
+import json
 
 class GraphNode:
-
     def __init__(self, text, idx):
-        this.text = text
-        this.id = idx
+        self.text = text
+        self.idx = idx
 
 
-def main():
-	file_path = "musique_data_v1.0/data/musique_ans_v1.0_train.jsonl"
+def main(file_path):
+    entity_extractor = EntityExtractor()
+    data_retriever = WikiDataRetriever()
 
-	with open(file_path, "r") as file:
+    with open(file_path, "r") as file:
     # Iterate over each line in the file
         for line in file:
         # Parse the JSON string into a Python dictionary
             data = json.loads(line)
+            entity_to_passage_ids = {}
+            passage_id_to_entity = {}
             
             question = data["question"]
 
-            graph_nodes = [new GraphNode(question, -1)]
+            graph_nodes = [GraphNode(question, -1)]
 
             paragraphs = data["paragraphs"]
 
             for paragraph in paragraphs: 
-                paragraph_text = paragraph["paragraph_text"]
+                paragraph_text = paragraph["title"]
+                paragraph_text += paragraph["paragraph_text"]
                 idx = paragraph["idx"]
-                graph_nodes.append(new GraphNode(paragraph_text, idx))
+                graph_nodes.append(GraphNode(paragraph_text, idx))
 
-            linked_entities_question = nlp(question)._.linkedEntities
+            for nodes in graph_nodes:
+                entities = entity_extractor.get_entities(nodes.text) 
+                # print(entities)
+                passage_id_to_entity[nodes.idx] = set()
+                for entity in entities:
+                    if entity_to_passage_ids.get(entity) == None:
+                        entity_to_passage_ids[entity] = set() 
+                    entity_to_passage_ids[entity].add(nodes.idx)
+                    passage_id_to_entity[nodes.idx].add(entity)
 
-            # get wikidata link
-            # get en wikipedia url 
-            # extract contents of this wikipedia article 
-            # go through all the passages and add an edge between this node and that node, 
-            # if there is a similarity greater than threshold 
-            # create new json object with a key called edges 
+            adj = {}
+            for nodes in graph_nodes:
+                adj[nodes.idx] = set()
+                for entity in passage_id_to_entity[nodes.idx]:
+                    child_entities = data_retriever.get_child_entities(entity)
+                    for child_entity in child_entities:
+                        # print(child_entity)
+                        if entity_to_passage_ids.get(child_entity[0]) != None:
+                            for passage_id in entity_to_passage_ids[child_entity]:
+                                adj[nodes.idx].add(passage_id)
+                    for passage_id in entity_to_passage_ids.get(entity):
+                      if passage_id != nodes.idx:
+                            adj[nodes.idx].add(passage_id)
 
-            
-            # approach-2 
-            # get entitiies and wikidataIds for all passages 
-            # then add an edge between passage-1 to passage-2 if there is an entity in the entity graph of passage-1
-            # that matches an entity is passage-2. 
 
-            # store a hashmap of entities and list of passage-ids 
+            print(adj)
+            print(entity_to_passage_ids)
+            print(passage_id_to_entity)
+            break
 
-            # for each entity in each passage 
-            #   curl wikidata 
-            #   
-
-def get_entities():
-    
+if __name__ == '__main__':
+    file_path = "musique_data_v1.0/data/musique_ans_v1.0_train.jsonl"
+    main(file_path)
