@@ -1,0 +1,3 @@
+1) Wikidata graph - https://medium.com/everythingisconnected/building-knowledge-graph-using-wiki-data-7e3108a67187 
+
+2) Spacy Entity Linker - https://github.com/egerber/spaCy-entity-linker

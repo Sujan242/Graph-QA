@@ -18,6 +18,7 @@ def main():
 
                     print(data["paragraphs"][0])
                     print("question" + " " + data["question"])
+                    # "{'idx': 0, 'title': 'Pakistan Super League', 'paragraph_text': 'Pakistan Super League (Urdu: پاکستان سپر لیگ \u202c \u200e; PSL) is a Twenty20 cricket league, founded in Lahore on 9 September 2015 with five teams and now comprises six teams. Instead of operating as an association of independently owned teams, the league is a single entity in which each franchise is owned and controlled by investors.', 'is_supporting': False}"
                     print("answer" + " " + data['answer'])
                     print(f"Question-decomposition {data['question_decomposition']}") # this contains the steps required to arrive at the answer
             num_hops = len(data['question_decomposition'])
