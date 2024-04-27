@@ -1,7 +1,7 @@
 import json
 import matplotlib
 def main():
-    file_path = "musique_data_v1.0/data/musique_ans_v1.0_train.jsonl"
+    file_path = "../musique_data_v1.0/data/musique_ans_v1.0_train.jsonl"
 
     should_print = True
     # print an example from the dataset 
@@ -16,6 +16,7 @@ def main():
                     should_print = False
                     print(data.keys())  # Example: Print each line of JSONL data
 
+                    print(data["paragraphs"][0])
                     print("question" + " " + data["question"])
                     print("answer" + " " + data['answer'])
                     print(f"Question-decomposition {data['question_decomposition']}") # this contains the steps required to arrive at the answer

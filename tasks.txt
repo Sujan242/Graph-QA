@@ -1,1 +1,2 @@
 1) Download and visualize the dataset 
+2) Construct graphs
