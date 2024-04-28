@@ -7,6 +7,7 @@ import spacy
 class EntityExtractor:
 
     def __init__(self):
+        spacy.require_gpu()
         self.nlp = spacy.load("en_core_web_md")
         self.nlp.add_pipe("entityLinker", last=True)
 

@@ -12,6 +12,7 @@ def main(file_path):
     entity_extractor = EntityExtractor()
     data_retriever = WikiDataRetriever()
 
+    adjacency_lists = {}
     with open(file_path, "r") as file:
     # Iterate over each line in the file
         for line in file:
@@ -57,10 +58,18 @@ def main(file_path):
                             adj[nodes.idx].add(passage_id)
 
 
-            print(adj)
-            print(entity_to_passage_ids)
-            print(passage_id_to_entity)
-            break
+            # print(adj)
+            # print(entity_to_passage_ids)
+            # print(passage_id_to_entity)
+            adj_list = {}
+            for key in adj:
+              adj_list[key] = list(adj[key])
+
+            adjacency_lists[data["id"]] = adj_list
+            # break
+
+    with open('graphs_train.json', 'w') as fp:
+        json.dump(adjacency_lists, fp)
 
 if __name__ == '__main__':
     file_path = "musique_data_v1.0/data/musique_ans_v1.0_train.jsonl"

@@ -1,2 +1,3 @@
 1) Download and visualize the dataset 
-2) Construct graphs
+2) Construct graphs using Spacy entity linker 
+3) Analyze graph and formulate hypothesis
