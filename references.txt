@@ -1,3 +1,7 @@
 1) Wikidata graph - https://medium.com/everythingisconnected/building-knowledge-graph-using-wiki-data-7e3108a67187 
 
 2) Spacy Entity Linker - https://github.com/egerber/spaCy-entity-linker
+
+3) Pygeometric tutorial - https://pytorch-geometric.readthedocs.io/en/latest/get_started/colabs.html 
+
+TODO remove:  https://stackoverflow.com/questions/71513200/t5tokenizer-and-t5encodermodel-are-used-to-encode-sentences-then-nn-transformerd

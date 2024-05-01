@@ -1,3 +1,5 @@
 1) Download and visualize the dataset 
 2) Construct graphs using Spacy entity linker 
 3) Analyze graph and formulate hypothesis
+4) Preprocess and tokenize dataset
+5) Setup baseline model
