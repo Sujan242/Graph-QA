@@ -150,9 +150,3 @@ class MusiqueDataSet(Dataset):
         s += f"[answer] {answer}"
 
         return s
-
-def main():
-    dataset = MusiqueDataSet("../musique_data_v1.0/data/musique_ans_v1.0_train.jsonl", 256, "test")
-
-if __name__ == '__main__':
-    main()

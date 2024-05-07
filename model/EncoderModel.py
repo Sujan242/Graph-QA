@@ -15,7 +15,7 @@ class Encoder(nn.Module):
 
         # Encode question
 
-        question_outputs = self.encoder(input_ids=question_encodings, attention_mask=question_encodings).last_hidden_state
+        question_outputs = self.encoder(input_ids=question_encodings).last_hidden_state
         outputs.append(question_outputs)
         # # Encode each paragraph independently
 
@@ -27,4 +27,4 @@ class Encoder(nn.Module):
         concatenated_encodings = torch.cat(outputs, dim=1)
 
 
-        return concatenated_encodingss
+        return concatenated_encodings
